@@ -29,3 +29,13 @@ print(all(new_list))  # should be False because not all the elements are True
 number_list = [1, 2, 3, -5]
 print(any([el > 0 for el in number_list]))  # should be False because at least one element is positive
 print(all([el > 0 for el in number_list]))  # should be False because not all elements are positive
+
+# collection map function
+simple_list = [1, 2, 3, 4]
+def multiply(el):
+    return el * 2
+
+print(list(map(multiply, simple_list)))
+
+# map with lambda
+print(list(map(lambda el: el * 2, simple_list)))
