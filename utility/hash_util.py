@@ -1,6 +1,7 @@
 import hashlib as hl  # creating an alias to an import and then in the code we should use the alias
 import json
 
+# __all_ = ['hash_string_256', 'hash_block']
 
 def hash_string_256(string):
     return hl.sha256(string).hexdigest()
