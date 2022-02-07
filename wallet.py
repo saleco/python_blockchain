@@ -9,9 +9,10 @@ import Crypto.Random
 
 class Wallet:
 
-    def __init__(self):
+    def __init__(self, node_id):
         self.private_key = None
         self.public_key = None
+        self.node_id = node_id
 
     def create_keys(self):
         private_key, public_key = self.generate_keys()
@@ -19,9 +20,9 @@ class Wallet:
         self.public_key = public_key
 
     def save_keys(self):
-        if self.public_key != None and self.private_key != None:
+        if self.public_key is not None and self.private_key is not None:
             try:
-                with open('wallet.txt', mode='w') as f:
+                with open('wallet-{}.txt'.format(self.node_id), mode='w') as f:
                     f.write(self.public_key)
                     f.write('\n')
                     f.write(self.private_key)
@@ -32,7 +33,7 @@ class Wallet:
 
     def load_keys(self):
         try:
-            with open('wallet.txt', mode='r') as f:
+            with open('wallet-{}.txt'.format(self.node_id), mode='r') as f:
                 keys = f.readlines()
                 public_key = keys[0][:-1]
                 private_key = keys[1]
@@ -61,4 +62,3 @@ class Wallet:
         verifier = PKCS1_v1_5.new(public_key)
         h = SHA256.new((str(transaction.sender) + str(transaction.recipient) + str(transaction.amount)).encode('utf8'))
         return verifier.verify(h, binascii.unhexlify(transaction.signature))
-
